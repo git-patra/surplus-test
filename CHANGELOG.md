@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v9.1.4...9.x)
+## [Unreleased](https://github.com/laravel/laravel/compare/base...main)
+
+## [base](https://github.com/laravel/laravel/compare/v9.1.4...base) - 2022-05-07
+
+- Version 1.0.0 for my base crud
 
 ## [v9.1.4](https://github.com/laravel/laravel/compare/v9.1.3...v9.1.4) - 2022-03-29
 

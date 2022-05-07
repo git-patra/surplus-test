@@ -13,7 +13,10 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'text',
+        'status',
+        'creator_id',
     ];
+
 
     public function creator(): BelongsTo
     {

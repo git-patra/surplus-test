@@ -1,7 +1,8 @@
 <?php
 
+namespace App\Base\Utils;
 
-enum Status: string
+enum StatusEnum: string
 {
     case DRAFT = 'draft';
     case ACTIVE = 'active';

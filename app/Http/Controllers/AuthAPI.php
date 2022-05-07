@@ -38,6 +38,7 @@ class AuthAPI extends Controller
         ]);
 
         $user = User::create([
+            $request,
             'name' => ucwords($request->name),
             'email' => $request->email,
             'password' => bcrypt($request->password)

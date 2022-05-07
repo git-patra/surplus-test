@@ -15,7 +15,15 @@ class UpdateManager
     public string $id;
     public BaseResource $baseResource;
 
-
+    /**
+     * Process Create Data
+     *
+     * @param BaseRequest $request
+     * @param Builder $model
+     * @param string $id
+     * @param BaseResource $baseResource
+     * @return JsonResource
+     */
     public function execute(BaseRequest $request, Builder $model, string $id, BaseResource $baseResource): JsonResource
     {
         $this->request = $request;
@@ -30,11 +38,21 @@ class UpdateManager
         return $this->afterProcess($new_data);
     }
 
+    /**
+     * Function Logic Before Save Data
+     *
+     * @return void
+     */
     private function beforeProcess(): void
     {
         return;
     }
 
+    /**
+     * Save Data
+     *
+     * @return Model|Builder|null
+     */
     private function process(): Model|Builder|null
     {
         $update = $this->builder->findOrFail($this->id);
@@ -46,6 +64,11 @@ class UpdateManager
         return $update->fresh();
     }
 
+    /**
+     * Function Logic After Save Data
+     *
+     * @return JsonResource
+     */
     private function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);

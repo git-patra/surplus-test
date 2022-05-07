@@ -15,6 +15,14 @@ class IndexManager
     public Request $request;
     public Builder $builder;
 
+    /**
+     * Execute Function
+     *
+     * @param Request $request
+     * @param Builder $model
+     * @param BaseResource $baseResource
+     * @return JsonResource
+     */
     public function execute(Request $request, Builder $model, BaseResource $baseResource): JsonResource
     {
         $this->request = $request;
@@ -25,6 +33,11 @@ class IndexManager
         return $baseResource::collection($this->paginate($this->builder, $this->request));
     }
 
+    /**
+     * Filter Logic
+     *
+     * @return Builder
+     */
     public function beforeResponse(): Builder
     {
         $this->manipulateRequest();
@@ -40,6 +53,11 @@ class IndexManager
         return $this->builder;
     }
 
+    /**
+     * Function for Manipulated Request
+     *
+     * @return void
+     */
     public function manipulateRequest(): void
     {
         return;

@@ -11,8 +11,8 @@ use App\Base\Usecases\InactiveManager;
 use App\Base\Usecases\IndexManager;
 use App\Base\Usecases\ShowManager;
 use App\Base\Usecases\UpdateManager;
-use App\Base\Utils\StatusEnum;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,6 +49,11 @@ class MyBaseController extends Controller
         $this->inactiveManager = new InactiveManager();
     }
 
+    /**
+     * Set Request Rule for Validation Create and Updated
+     * @return void
+     * @throws BindingResolutionException
+     */
     public function setRequest(): void
     {
         $this->createRequest = app()->make(BaseRequest::class);
@@ -82,6 +87,7 @@ class MyBaseController extends Controller
      * @param Request $request
      *
      * @return JsonResource
+     * @throws BindingResolutionException
      */
     public function create(Request $request): JsonResource
     {
@@ -95,6 +101,7 @@ class MyBaseController extends Controller
      *
      * @param int | string $id
      * @return JsonResource
+     * @throws BindingResolutionException
      */
     public function update(int|string $id): JsonResource
     {
@@ -116,7 +123,7 @@ class MyBaseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Activate Data.
      *
      * @param Request $request
      *
@@ -128,7 +135,7 @@ class MyBaseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deactivate data.
      *
      * @param Request $request
      *

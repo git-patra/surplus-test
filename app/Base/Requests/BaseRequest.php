@@ -31,13 +31,11 @@ class BaseRequest extends FormRequest
     }
 
     /**
+     *
      * @return array
      */
     public function getFillable(): array
     {
-        return [
-            "code" => $this->code,
-            "name" => $this->name,
-        ];
+        return $this->all();
     }
 }

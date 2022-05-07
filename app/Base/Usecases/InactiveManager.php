@@ -16,6 +16,13 @@ class InactiveManager
     public array $failedProcess;
     public array $succeedProcess;
 
+    /**
+     * Process Logic Data
+     *
+     * @param Request $request
+     * @param Builder $model
+     * @return JsonResponse
+     */
     public function execute(Request $request, Builder $model): JsonResponse
     {
         $this->request = $request;
@@ -26,6 +33,11 @@ class InactiveManager
         return $this->processEach();
     }
 
+    /**
+     * Looping IDS Data
+     *
+     * @return JsonResponse
+     */
     public function processEach(): JsonResponse
     {
         $allData = $this->builder->whereIn('id', $this->request->ids)->get();
@@ -50,11 +62,21 @@ class InactiveManager
         ], 200);
     }
 
+    /**
+     * Function Logic Before Inactive Data
+     *
+     * @return Model
+     */
     private function beforeProcess(Model $data): Model
     {
         return $data;
     }
 
+    /**
+     * Update Status to Inactive
+     *
+     * @return void
+     */
     private function process(Model $data): void
     {
         $data->update(
@@ -62,6 +84,11 @@ class InactiveManager
         );
     }
 
+    /**
+     * Function Logic After Inactive Data
+     *
+     * @return void
+     */
     private function afterProcess(Model $data): void
     {
         return;

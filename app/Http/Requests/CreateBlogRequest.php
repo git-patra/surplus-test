@@ -19,16 +19,4 @@ class CreateBlogRequest extends BaseRequest
             "text" => 'required'
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getFillable(): array
-    {
-        return [
-            "title" => $this->title,
-            "text" => $this->text,
-            "creator_id" => $this->creator_id,
-        ];
-    }
 }

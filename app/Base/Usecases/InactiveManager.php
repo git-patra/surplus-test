@@ -1,34 +1,37 @@
 <?php
 
-use App\Http\Requests\BaseRequest;
+namespace App\Base\Usecases;
+
+use App\Base\Utils\StatusEnum;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class InactiveManager
 {
-    public BaseRequest $request;
+    public Request $request;
     public Builder $builder;
     public array $failedProcess;
     public array $succeedProcess;
 
-    public function __construct(BaseRequest $request, Builder $model)
+    public function execute(Request $request, Builder $model): JsonResponse
     {
         $this->request = $request;
         $this->builder = $model;
-    }
+        $this->succeedProcess = [];
+        $this->failedProcess = [];
 
-    public function __invoke(): JsonResponse
-    {
         return $this->processEach();
     }
 
     public function processEach(): JsonResponse
     {
-        collect($this->request->ids)->map(function ($id) {
-            try {
-                $oldData = $this->builder->findOrFail($id);
+        $allData = $this->builder->whereIn('id', $this->request->ids)->get();
 
+        collect($allData)->map(function ($oldData) {
+            try {
                 $oldData = $this->beforeProcess($oldData);
                 $this->process($oldData);
 
@@ -36,7 +39,7 @@ class InactiveManager
 
                 $this->succeedProcess[] = "data with id {$oldData->id} successfully deactivated.";
             } catch (Exception $exception) {
-                $this->failedProcess[] = $exception;
+                $this->failedProcess[] = $exception->getMessage();
             }
         });
 
@@ -52,13 +55,11 @@ class InactiveManager
         return $data;
     }
 
-    private function process(Model $data): Model|Builder|null
+    private function process(Model $data): void
     {
         $data->update(
-            ['status' => Status::INACTIVE]
+            ['status' => StatusEnum::INACTIVE->value]
         );
-
-        return $data->fresh();
     }
 
     private function afterProcess(Model $data): void

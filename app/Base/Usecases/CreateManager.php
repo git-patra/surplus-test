@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Requests\BaseRequest;
-use App\Http\Resources\BaseResource;
+namespace App\Base\Usecases;
+
+use App\Base\Requests\BaseRequest;
+use App\Base\Resources\BaseResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CreateManager
 {
@@ -11,7 +14,7 @@ class CreateManager
     public Builder $builder;
     public BaseResource $baseResource;
 
-    public function __invoke(BaseRequest $request, Builder $model, BaseResource $baseResource): Model
+    public function execute(BaseRequest $request, Builder $model, BaseResource $baseResource): JsonResource
     {
         $this->request = $request;
         $this->builder = $model;
@@ -31,14 +34,14 @@ class CreateManager
 
     private function process(): Model|Builder|null
     {
-        $create = $this->builder->create([
+        $create = $this->builder->create(
             $this->request->getFillable()
-        ]);
+        );
 
         return $create->fresh();
     }
 
-    private function afterProcess(Model $data): Model
+    private function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);
     }

@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Requests\BaseRequest;
-use App\Http\Resources\BaseResource;
+namespace App\Base\Usecases;
+
+use App\Base\Requests\BaseRequest;
+use App\Base\Resources\BaseResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UpdateManager
 {
@@ -13,7 +16,7 @@ class UpdateManager
     public BaseResource $baseResource;
 
 
-    public function __invoke(BaseRequest $request, Builder $model, string $id, BaseResource $baseResource): Model
+    public function execute(BaseRequest $request, Builder $model, string $id, BaseResource $baseResource): JsonResource
     {
         $this->request = $request;
         $this->builder = $model;
@@ -43,7 +46,7 @@ class UpdateManager
         return $update->fresh();
     }
 
-    private function afterProcess(Model $data): Model
+    private function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);
     }

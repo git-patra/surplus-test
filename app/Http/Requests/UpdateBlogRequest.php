@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use app\Base\Requests\BaseRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateBlogRequest extends BaseRequest
@@ -27,6 +28,7 @@ class UpdateBlogRequest extends BaseRequest
         return [
             "title" => $this->title,
             "text" => $this->text,
+            "creator_id" => $this->creator_id,
         ];
     }
 }

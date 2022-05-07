@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models\Filters\Interfaces;
+namespace app\Base\Helper\Filter\Interfaces;
 
 use Illuminate\Http\Request;
 
-interface FilterInterface {
+interface FilterInterface
+{
     /**
      * Set filter query
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return void
      */
     public function setFilterQueries(Request $request): void;

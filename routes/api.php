@@ -20,13 +20,17 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
-//    Route::controller(BlogController::class)->group(function () {
-//        Route::prefix('blog')->group(function () {
-//            Route::get('', 'index');
-//            Route::get('{id}', 'show');
-//            Route::post('', 'create');
-//            Route::put('{id}', 'update');
-//            Route::delete('', 'delete');
-//        });
-//    });
+    Route::controller(BlogController::class)->group(function () {
+        Route::prefix('blogs')->group(function () {
+            Route::put('active', 'active');
+            Route::put('inactive', 'inactive');
+            Route::get('', 'index');
+            Route::get('{id}', 'show');
+            Route::post('', 'create');
+            Route::put('{id}', 'update');
+            Route::delete('', 'delete');
+        });
+    });
 });
+
+

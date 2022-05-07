@@ -29,8 +29,10 @@ class AuthAPI extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function register(Request $request): JsonResponse
+    public function register(): JsonResponse
     {
+        $request = new Request();
+        dd($request);
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
@@ -38,6 +40,7 @@ class AuthAPI extends Controller
         ]);
 
         $user = User::create([
+            $request,
             'name' => ucwords($request->name),
             'email' => $request->email,
             'password' => bcrypt($request->password)

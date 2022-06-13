@@ -65,7 +65,7 @@ class DeleteManager
      *
      * @return Model
      */
-    private function beforeProcess(Model $data): Model
+    public function beforeProcess(Model $data): Model
     {
         return $data;
     }
@@ -85,7 +85,7 @@ class DeleteManager
      *
      * @return void
      */
-    private function afterProcess(Model $data): void
+    public function afterProcess(Model $data): void
     {
         return;
     }

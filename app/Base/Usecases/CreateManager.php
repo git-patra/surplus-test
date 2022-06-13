@@ -40,7 +40,7 @@ class CreateManager
      *
      * @return void
      */
-    private function beforeProcess(): void
+    public function beforeProcess(): void
     {
         return;
     }
@@ -64,7 +64,7 @@ class CreateManager
      *
      * @return JsonResource
      */
-    private function afterProcess(Model $data): JsonResource
+    public function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);
     }

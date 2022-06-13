@@ -16,7 +16,7 @@ class UpdateImageRequest extends BaseRequest
     {
         return [
             "name" => ['required', Rule::unique('images')->ignore($this->id, 'id')],
-            'file' => 'required|mimes:png,jpg,jpeg',
+            'file_image' => 'required|mimes:png,jpg,jpeg',
             "enable" => 'required|boolean'
         ];
     }

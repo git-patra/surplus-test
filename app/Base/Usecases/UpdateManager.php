@@ -30,6 +30,7 @@ class UpdateManager
         $this->builder = $model;
         $this->id = $id;
         $this->baseResource = $baseResource;
+        $this->oldData = $model->findOrFail($id);
 
         $this->beforeProcess();
 
@@ -43,7 +44,7 @@ class UpdateManager
      *
      * @return void
      */
-    private function beforeProcess(): void
+    public function beforeProcess(): void
     {
         return;
     }
@@ -69,7 +70,7 @@ class UpdateManager
      *
      * @return JsonResource
      */
-    private function afterProcess(Model $data): JsonResource
+    public function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);
     }

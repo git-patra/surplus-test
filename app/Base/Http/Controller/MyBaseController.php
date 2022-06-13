@@ -54,9 +54,18 @@ class MyBaseController extends Controller
      * @return void
      * @throws BindingResolutionException
      */
-    public function setRequest(): void
+    public function setCreateRequest(): void
     {
         $this->createRequest = app()->make(BaseRequest::class);
+    }
+
+    /**
+     * Set Request Rule for Validation Create and Updated
+     * @return void
+     * @throws BindingResolutionException
+     */
+    public function setUpdateRequest(): void
+    {
         $this->updateRequest = app()->make(BaseRequest::class);
     }
 
@@ -91,7 +100,7 @@ class MyBaseController extends Controller
      */
     public function create(Request $request): JsonResource
     {
-        $this->setRequest();
+        $this->setCreateRequest();
 
         return $this->createManager->execute($this->createRequest, $this->builder, $this->baseResource);
     }
@@ -105,7 +114,7 @@ class MyBaseController extends Controller
      */
     public function update(int|string $id): JsonResource
     {
-        $this->setRequest();
+        $this->setUpdateRequest();
 
         return $this->updateManager->execute($this->updateRequest, $this->builder, $id, $this->baseResource);
     }

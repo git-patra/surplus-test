@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Base\Http\Controller\MyBaseController;
 use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Usecases\Products\CreateProductManager;
+use App\Http\Usecases\Products\DeleteProductManager;
+use App\Http\Usecases\Products\UpdateProductManager;
 use App\Models\Product;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
@@ -13,6 +16,10 @@ class ProductController extends MyBaseController
     public function __construct()
     {
         parent::__construct(Product::query()->with('categories', 'images'));
+
+        $this->createManager = new CreateProductManager();
+        $this->updateManager = new UpdateProductManager();
+        $this->deleteManager = new DeleteProductManager();
     }
 
     /**

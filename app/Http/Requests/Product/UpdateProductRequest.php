@@ -15,7 +15,7 @@ class UpdateProductRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "name" => ['required', Rule::unique('products')],
+            "name" => ['required', Rule::unique('products')->ignore($this->id, 'id')],
             "enable" => 'required|boolean'
         ];
     }

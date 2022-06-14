@@ -11,8 +11,8 @@ use App\Base\Usecases\InactiveManager;
 use App\Base\Usecases\IndexManager;
 use App\Base\Usecases\ShowManager;
 use App\Base\Usecases\UpdateManager;
-use App\Base\Utils\StatusEnum;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,9 +49,23 @@ class MyBaseController extends Controller
         $this->inactiveManager = new InactiveManager();
     }
 
-    public function setRequest(): void
+    /**
+     * Set Request Rule for Validation Create and Updated
+     * @return void
+     * @throws BindingResolutionException
+     */
+    public function setCreateRequest(): void
     {
         $this->createRequest = app()->make(BaseRequest::class);
+    }
+
+    /**
+     * Set Request Rule for Validation Create and Updated
+     * @return void
+     * @throws BindingResolutionException
+     */
+    public function setUpdateRequest(): void
+    {
         $this->updateRequest = app()->make(BaseRequest::class);
     }
 
@@ -82,10 +96,11 @@ class MyBaseController extends Controller
      * @param Request $request
      *
      * @return JsonResource
+     * @throws BindingResolutionException
      */
     public function create(Request $request): JsonResource
     {
-        $this->setRequest();
+        $this->setCreateRequest();
 
         return $this->createManager->execute($this->createRequest, $this->builder, $this->baseResource);
     }
@@ -95,10 +110,11 @@ class MyBaseController extends Controller
      *
      * @param int | string $id
      * @return JsonResource
+     * @throws BindingResolutionException
      */
     public function update(int|string $id): JsonResource
     {
-        $this->setRequest();
+        $this->setUpdateRequest();
 
         return $this->updateManager->execute($this->updateRequest, $this->builder, $id, $this->baseResource);
     }
@@ -116,7 +132,7 @@ class MyBaseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Activate Data.
      *
      * @param Request $request
      *
@@ -128,7 +144,7 @@ class MyBaseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deactivate data.
      *
      * @param Request $request
      *

@@ -14,6 +14,14 @@ class CreateManager
     public Builder $builder;
     public BaseResource $baseResource;
 
+    /**
+     * Process Create Data
+     *
+     * @param BaseRequest $request
+     * @param Builder $model
+     * @param BaseResource $baseResource
+     * @return JsonResource
+     */
     public function execute(BaseRequest $request, Builder $model, BaseResource $baseResource): JsonResource
     {
         $this->request = $request;
@@ -27,11 +35,21 @@ class CreateManager
         return $this->afterProcess($new_data);
     }
 
-    private function beforeProcess(): void
+    /**
+     * Function Logic Before Save Data
+     *
+     * @return void
+     */
+    public function beforeProcess(): void
     {
         return;
     }
 
+    /**
+     * Save Data
+     *
+     * @return Model|Builder|null
+     */
     private function process(): Model|Builder|null
     {
         $create = $this->builder->create(
@@ -41,7 +59,12 @@ class CreateManager
         return $create->fresh();
     }
 
-    private function afterProcess(Model $data): JsonResource
+    /**
+     * Function Logic After Save Data
+     *
+     * @return JsonResource
+     */
+    public function afterProcess(Model $data): JsonResource
     {
         return new $this->baseResource($data);
     }

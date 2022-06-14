@@ -16,6 +16,13 @@ class ActiveManager
     public array $failedProcess;
     public array $succeedProcess;
 
+    /**
+     * Process Logic Data
+     *
+     * @param Request $request
+     * @param Builder $model
+     * @return JsonResponse
+     */
     public function execute(Request $request, Builder $model): JsonResponse
     {
         $this->request = $request;
@@ -26,6 +33,11 @@ class ActiveManager
         return $this->processEach();
     }
 
+    /**
+     * Looping IDS Data
+     *
+     * @return JsonResponse
+     */
     public function processEach(): JsonResponse
     {
         $allData = $this->builder->whereIn('id', $this->request->ids)->get();
@@ -50,11 +62,21 @@ class ActiveManager
         ], 200);
     }
 
+    /**
+     * Function Logic Before Active Data
+     *
+     * @return Model
+     */
     private function beforeProcess(Model $data): Model
     {
         return $data;
     }
 
+    /**
+     * Update Status to Active
+     *
+     * @return void
+     */
     private function process(Model $data): void
     {
         $data->update(
@@ -62,6 +84,11 @@ class ActiveManager
         );
     }
 
+    /**
+     * Function Logic After Active Data
+     *
+     * @return void
+     */
     private function afterProcess(Model $data): void
     {
         return;

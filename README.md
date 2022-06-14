@@ -40,6 +40,7 @@ Note:
 **How To Run**:
 - Buat DB surplus_test (atau bebas)
 - Update .env, sesuai nama credential db (contoh ada di .env example)
+- composer install
 - php artisan key:generate
 - php artisan migrate --seed / php artisan migrate:fresh --seed
 - upload gambar untuk seeder dengan nama "foto-ayam.png" (optional)
